@@ -8,8 +8,9 @@ Chat Socket.io NodeJS
 * [download MongoDB](https://www.mongodb.com/try/download/community)
 * npm i nodemon --save
 
-## How to use
+### Launch App
 * `nodemon app.js`
 
-### Launch App
+## How to use
 * `127.0.0.1:3000`
+
