@@ -15,8 +15,11 @@ mongoose.set('useCreateIndex', true);
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-  
+
 app.use(bodyParser.json());
+
+const indexRoute = require('./api/routes/indexRoute');
+indexRoute(app);
 
 const userRoute = require('./api/routes/userRoute');
 userRoute(app);
