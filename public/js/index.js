@@ -1,2 +1,5 @@
-// Connexion à socket.io
-var socket = io.connect('http://localhost:3000');
+// var socket = io('http://localhost');
+// socket.on('connect', function(){});
+// socket.on('event', function(data){});
+// socket.on('disconnect', function(){});
+console.log("d")
