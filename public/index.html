@@ -9,24 +9,25 @@
     </head>
     <body>
         <h1 class="text-center">Welcome to the Chat !</h1>  
-        <br>
-        <div id="chatbox">
-            <textarea class="form-control" rows="10" disabled id="chatboxarea"></textarea>
+        <div class="text-right">
+            <button type="button" class="btn btn-outline-primary">Sign In</button>
+            <button type="button" class="btn btn-outline-primary">Sign Up</button>
         </div>
+        <br>
+        <div id="container">
+            <div id="chatbox" class="row justify-content-md-center">
+                <textarea class="form-control col col-lg-8" rows="10" disabled id="chatboxarea"></textarea>
+                <input id="TextToSend" class="form-control" placeholder="Ecrivez votre message ..." id="usr">
+                <button type="button" class="btn btn-success col col-lg-8">Envoyer</button>
+            </div>
+        </div>
+        
 
         <!--        Script JQuery/BootStrap     -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <!--        Load JavaScript Index       -->
-        <script src="js/socketio.js"></script>
+        <script src="js/socket.io.js"></script>
         <script src="js/index.js"></script>    
-        <script>
-            var socket = io('http://localhost:8080');
-            socket.on('connect', function(){
-                console.log("hey")
-            });
-            socket.on('event', function(data){});
-            socket.on('disconnect', function(){});
-        </script>
 </body>
 </html>
