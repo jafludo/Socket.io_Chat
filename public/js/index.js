@@ -1,5 +1,13 @@
-// var socket = io('http://localhost');
-// socket.on('connect', function(){});
-// socket.on('event', function(data){});
-// socket.on('disconnect', function(){});
-console.log("d")
+var socket = io('http://localhost:8080');
+
+socket.on('connect', function(){
+    console.log(socket.id)
+});
+
+socket.on('event', function(data){
+    
+});
+
+socket.on('disconnect', function(){
+
+});
