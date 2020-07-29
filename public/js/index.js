@@ -1,9 +1,18 @@
 var socket = io('http://localhost:8080');
+var randomid = Math.floor(Math.random() * 999999) + 1;
+var User = "Anonymous"+randomid;
+$('#textuserp').text($('#textuserp').text() + "Connected as " +User.toString());
+
 socket.on('connect', function(socketd){
-    var date = formatDate();
-    var joinmsg = date + " " + socket.id+" join the chat !\n";
-    $('#textbox').val($('#textbox').val() + joinmsg); 
-    socket.emit('messageget', joinmsg);
+    var sessionid = sessionStorage.getItem('sessionid');
+    if(sessionid == undefined){
+        sessionStorage.setItem('sessionid', (User).toString());
+        var date = formatDate();
+        var joinmsg = date + " " + User+" join the chat !\n";
+        $('#textbox').val($('#textbox').val() + joinmsg); 
+        socket.emit('messageget', joinmsg);
+        
+    }    
 });
 
 $("#TextToSend").keypress(function( event ) {
@@ -17,9 +26,7 @@ $("#buttonSendText").click(function() {
 });
 
 socket.on('disconnect', function(){
-    var date = formatDate();
-    var leftmsg = date + socket.id + " " + " left the chat !\n";
-    $('#textbox').val($('#textbox').val() + leftmsg); 
+
 });
 
 socket.on('messagetosend', function(data){
@@ -27,7 +34,9 @@ socket.on('messagetosend', function(data){
 });
 
 socket.on('userdisconnected', function(data){
-    $('#textbox').val($('#textbox').val() + data);
+     var date = formatDate();
+     var playerleft = date + " " + data;
+     $('#textbox').val($('#textbox').val() + playerleft);
 });
 
 socket.on('messageget', function(data){
@@ -36,7 +45,7 @@ socket.on('messageget', function(data){
 
 function sendMessage(){
     var date = formatDate();
-    var texttosend = date + " " + socket.id + " : " +$("#TextToSend").val() + "\n";
+    var texttosend = date + " " + User + " : " +$("#TextToSend").val() + "\n";
     if($("#TextToSend").val() != ""){
         socket.emit('messagetosend', texttosend);
     }
