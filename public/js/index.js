@@ -1,13 +1,13 @@
 var socket = io('http://localhost:8080');
 
 socket.on('connect', function(socketd){
-    var joinmsg = "anonymous join the tchat !\n";
+    var joinmsg = socket.id+" join the tchat !\n";
     $('#textbox').val($('#textbox').val() + joinmsg); 
     socket.emit('messageget', joinmsg);
 });
 
 socket.on('disconnect', function(){
-    var leftmsg = "anonymous left the tchat !\n";
+    var leftmsg = socket.id+" left the tchat !\n";
     $('#textbox').val($('#textbox').val() + leftmsg); 
 });
 
