@@ -15,10 +15,6 @@ mongoose.set('useCreateIndex', true);
 
 app.use(cors({credentials: true, origin: 'http://127.0.0.1:8080'}));
 
-io.sockets.on('connection', function (socket, pseudo) {
-    console.log("client connected !")
-});
-
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -31,4 +27,6 @@ indexRoute(app);
 
 const userRoute = require('./api/routes/userRoute');
 userRoute(app);
-//
+
+const socketRoute = require('./api/routes/socketRoute');
+socketRoute(app,io);
