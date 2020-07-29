@@ -6,12 +6,12 @@ socket.on('connect', function(socketd){
     $('#textbox').val($('#textbox').val() + joinmsg); 
     socket.emit('messageget', joinmsg);
 });
+
 $("#TextToSend").keypress(function( event ) {
     if(event.key == "Enter"){
         sendMessage();
     }
 });
-
 
 $("#buttonSendText").click(function() {
     sendMessage();
@@ -38,7 +38,9 @@ socket.on('messageget', function(data){
 function sendMessage(){
     var date = formatDate();
     var texttosend = date + " " + socket.id + " : " +$("#TextToSend").val() + "\n";
-    socket.emit('messagetosend', texttosend);
+    if($("#TextToSend").val() != ""){
+        socket.emit('messagetosend', texttosend);
+    }
 }
 
 function formatDate(){
