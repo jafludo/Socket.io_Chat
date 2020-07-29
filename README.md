@@ -9,6 +9,7 @@ Chat Socket.io NodeJS
 * npm i nodemon --save
 
 ## Launch App
+* `Start MongoDB`
 * `nodemon app.js`
 
 ## How to use
