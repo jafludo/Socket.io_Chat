@@ -5,9 +5,14 @@ exports.initserver = (io) =>{
         console.log("client connected !")
 
         socket.on('disconnecting', (reason) => {
-            var userleft = socket.id+" left the tchat !\n";
+            var userleft = socket.id+" left the chat !\n";
             console.log("client disconnected for " + reason + " !")
             socket.broadcast.emit('userdisconnected',userleft);
+        });
+
+        socket.on('messagetosend', (data) => {
+            socket.broadcast.emit('messagetosend',data);
+            socket.emit('messagetosend',data);
         });
 
         socket.on('messageget', (data) => {
