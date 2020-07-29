@@ -7,10 +7,14 @@ socket.on('connect', function(socketd){
     socket.emit('messageget', joinmsg);
 });
 
+$("#TextToSend").keypress(function( event ) {
+    if(event.key == "Enter"){
+        sendMessage();
+    }
+});
+
 $("#buttonSendText").click(function() {
-    var date = formatDate();
-    var texttosend = date + " " + socket.id + " : " +$("#TextToSend").val() + "\n";
-    socket.emit('messagetosend', texttosend);
+    sendMessage();
 });
 
 socket.on('disconnect', function(){
@@ -31,10 +35,22 @@ socket.on('messageget', function(data){
     $('#textbox').val($('#textbox').val() + data);
 });
 
+function sendMessage(){
+    var date = formatDate();
+    var texttosend = date + " " + socket.id + " : " +$("#TextToSend").val() + "\n";
+    if($("#TextToSend").val() != ""){
+        socket.emit('messagetosend', texttosend);
+    }
+}
+
 function formatDate(){
     var date = new Date();
     var dateHeures = date.getHours();
     var dateMinutes = date.getMinutes();
-    var stringDate  = dateHeures + ":" + dateMinutes;
+    if(dateMinutes <= 9){
+        var temp = dateMinutes;
+        var dateMinutes = "0" + temp.toString();
+    }
+    var stringDate  = dateHeures + ":" + dateMinutes + " -";
     return stringDate;
 }
