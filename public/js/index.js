@@ -1,5 +1,4 @@
 var socket = io('http://localhost:8080');
-
 socket.on('connect', function(socketd){
     var date = formatDate();
     var joinmsg = date + " " + socket.id+" join the chat !\n";
