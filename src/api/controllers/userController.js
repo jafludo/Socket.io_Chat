@@ -92,7 +92,9 @@ exports.user_register = async function(req,res) {
   }
   
 }
-
+exports.test = (req, res) => {
+  console.log("test")
+};
 exports.user_login = (req, res) => {
     let {body} = req;
 
@@ -115,7 +117,6 @@ exports.user_login = (req, res) => {
                   res.json(token);
                 }
             })
-
         }
         else{
             res.status(201);

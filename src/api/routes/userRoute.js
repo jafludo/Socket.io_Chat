@@ -9,5 +9,4 @@ module.exports = (app) => {
 
     app.route('/users/login')
     .post(userController.user_login)
-
 }
