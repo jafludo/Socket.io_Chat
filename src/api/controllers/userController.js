@@ -1,5 +1,7 @@
 const User = require('../models/userModel');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
+require('dotenv').config();
 exports.list_all_users = (req, res) => {
     User.find({id: req.params._id}, (error, result) => {
       if(error){
@@ -19,13 +21,13 @@ function EmailFind(req){
     User.find({email: req.body.email})     
     .then(result =>{
       if(result[0].email == req.body.email){
-        console.log("email found")
+        //console.log("email found")
         emailalreadyexist = true;
         resolve(emailalreadyexist);
       }
     })
     .catch(error =>{
-      console.log("email not found")
+      //console.log("email not found")
       emailalreadyexist = false;
       resolve(emailalreadyexist);
     });
@@ -38,13 +40,13 @@ function PseudoFind(req){
     User.find({pseudo: req.body.pseudo})     
     .then(result =>{
       if(result[0].pseudo == req.body.pseudo){
-        console.log("pseudo found")
+        //console.log("pseudo found")
         pseudoalreadyexist = true;
         resolve(pseudoalreadyexist);
       }
     })
     .catch(error =>{
-      console.log("pseudo not found")
+      //console.log("pseudo not found")
       pseudoalreadyexist = false;
       resolve(pseudoalreadyexist);
     });
@@ -101,26 +103,23 @@ exports.user_login = (req, res) => {
         if(result){
             let userData = {
                 email: user.email,
-                role: user.role
             }
-            res.status(201);
-            res.json({userData});
-            /*
-            jwt.sign({userData}, process.env.JWT_KEY, {expiresIn: '30 days'}, (error, token) => {
+            jwt.sign({userData}, process.env.JWT, {expiresIn: '30 days'}, (error, token) => {
                 if(error){
                 res.status(500);
                 console.log(error);
                 res.json({message: "Erreur serveur."});
                 }
                 else {
-                res.json({userData});
+                  res.status(200);
+                  res.json(token);
                 }
             })
-            */
+
         }
         else{
-            res.status(500);
-            res.json({message: "Erreur serveur."})
+            res.status(201);
+            res.json({message: "Bad email or password !"})
         }
     })
     .catch(error => {

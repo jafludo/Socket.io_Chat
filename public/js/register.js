@@ -35,7 +35,7 @@ $("#form-register").submit(function(event) {
        event.preventDefault();
 
        //Custom redirect
-       //window.location.href = "index.html";
+       window.location.href = "login.html";
     }
     
 });
