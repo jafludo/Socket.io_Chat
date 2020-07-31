@@ -13,15 +13,57 @@ exports.list_all_users = (req, res) => {
       }
     })
 }
+function EmailFind(req){
+  var emailalreadyexist = false;
+  return new Promise(resolve =>{
+    User.find({email: req.body.email})     
+    .then(result =>{
+      if(result[0].email == req.body.email){
+        console.log("email found")
+        emailalreadyexist = true;
+        resolve(emailalreadyexist);
+      }
+    })
+    .catch(error =>{
+      console.log("email not found")
+      emailalreadyexist = false;
+      resolve(emailalreadyexist);
+    });
+  })
+}
 
-exports.user_register = (req, res) => {
+function PseudoFind(req){
+  var pseudoalreadyexist = false;
+  return new Promise(resolve =>{
+    User.find({pseudo: req.body.pseudo})     
+    .then(result =>{
+      if(result[0].pseudo == req.body.pseudo){
+        console.log("pseudo found")
+        pseudoalreadyexist = true;
+        resolve(pseudoalreadyexist);
+      }
+    })
+    .catch(error =>{
+      console.log("pseudo not found")
+      pseudoalreadyexist = false;
+      resolve(pseudoalreadyexist);
+    });
+  })
+}
+
+exports.user_register = async function(req,res) {
+
+  var pseudoalreadyexist = await PseudoFind(req);
+  var emailalreadyexist = await EmailFind(req);
+
+  if(pseudoalreadyexist == false && emailalreadyexist == false){
+
     let new_user = new User(req.body);
     let password = req.body.password;
   
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
-  
     new_user.password = hash;
     new_user.save()
     .then(user => {
@@ -33,6 +75,20 @@ exports.user_register = (req, res) => {
       console.log(error);
       res.json({message: "Erreur serveur."})
     })
+  }else{
+    
+    if(pseudoalreadyexist == true){
+      res.status(500);
+      res.json({message: "Pseudo déjà utilisé !"})
+      return;
+    }
+    if(emailalreadyexist == true){
+      res.status(500);
+      res.json({message: "Email déjà utilisé !"})
+      return;
+    }
+  }
+  
 }
 
 exports.user_login = (req, res) => {

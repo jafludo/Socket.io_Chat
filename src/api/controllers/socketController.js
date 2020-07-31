@@ -24,7 +24,7 @@ exports.initserver = (io) =>{
         });
         
     });
-    nbConnectes();
+    //nbConnectes();
 }
 
 function nbConnectes(){
