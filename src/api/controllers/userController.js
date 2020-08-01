@@ -92,9 +92,14 @@ exports.user_register = async function(req,res) {
   }
   
 }
-exports.test = (req, res) => {
-  console.log("test")
+exports.get_payload = (req, res) => {
+    let {token} = req.body;
+    console.log("data : "+token)
+    var payload = jwt.verify(token, process.env.JWT);
+    res.status(200);
+    res.json(payload.userData); 
 };
+
 exports.user_login = (req, res) => {
     let {body} = req;
 
@@ -104,9 +109,10 @@ exports.user_login = (req, res) => {
         var result = bcrypt.compareSync(body.password, hash); // true
         if(result){
             let userData = {
-                email: user.email,
+                pseudo : user.pseudo,
+                email: user.email
             }
-            jwt.sign({userData}, process.env.JWT, {expiresIn: '30 days'}, (error, token) => {
+            jwt.sign({userData}, process.env.JWT, {expiresIn: '1 days'}, (error, token) => {
                 if(error){
                 res.status(500);
                 console.log(error);
