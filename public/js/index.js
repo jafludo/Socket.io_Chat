@@ -1,7 +1,15 @@
 var socket = io('http://localhost:8080');
-var randomid = Math.floor(Math.random() * 999999) + 1;
-var User = "Anonymous"+randomid;
-$('#textuserp').text($('#textuserp').text() + "Connected as " +User.toString());
+// var randomid = Math.floor(Math.random() * 999999) + 1;
+// var User = "Anonymous"+randomid;
+// $('#textuserp').text($('#textuserp').text() + "Connected as " +User.toString());
+// sessionStorage.setItem('sessionid',User);
+
+$(document).ready(function() {
+    var token = sessionStorage.getItem('token');
+    if(token == undefined){
+        window.location.href = "login.html";
+    }
+});
 
 socket.on('connect', function(socketd){
     var sessionid = sessionStorage.getItem('sessionid');
