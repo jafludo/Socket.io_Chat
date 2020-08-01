@@ -22,8 +22,8 @@
     "ent": "^2.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.0",
-    "mongoose": "^5.9.25",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.27",
     "socket.io": "^2.3.0"
   }
 }
