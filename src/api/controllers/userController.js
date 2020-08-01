@@ -116,7 +116,8 @@ exports.user_login = (req, res) => {
         if(result){
             let userData = {
                 pseudo : user.pseudo,
-                email: user.email
+                email: user.email,
+                role : user.role
             }
             jwt.sign({userData}, process.env.JWT, {expiresIn: '1 days'}, (error, token) => {
                 if(error){
