@@ -24,10 +24,29 @@ function successAuth(data,resolve){
     if(!$('#btn-user-display').length)         
     {
         var button = $("<button></button>")
-        .addClass("btn btn-info float-right")
+        .addClass("btn btn-info")
         .attr( "id", "btn-user-display" )
         .text("Logged as : "+data.pseudo)
         $("#UserDisplay").append(button);
+    }
+    if(!$('#JoinRoom').length)         
+    {
+        var button = $("<button></button>")
+        .addClass("btn btn-info")
+        .attr( "id", "JoinRoom" )
+        .text("Join a room")
+        $("#RoomFeatures").append(button);
+    }
+    if(!$('#CreateRoom').length)         
+    {
+        console.log("dds"+data.role)
+        if(data.role == "VIP" || data.role == "Admin"){
+            var button = $("<button></button>")
+            .addClass("btn btn-info")
+            .attr( "id", "CreateRoom" )
+            .text("Create a room")
+            $("#RoomFeatures").append(button);
+        }
     }
     resolve(data);
 }
@@ -90,6 +109,7 @@ function sendMessage(){
     if($("#TextToSend").val() != ""){
         socket.emit('messagetosend', texttosend);
     }
+    $("#TextToSend").val("");
 }
 
 function formatDate(){
