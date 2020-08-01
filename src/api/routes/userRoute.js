@@ -3,6 +3,9 @@ module.exports = (app) => {
 
     app.route('/users')
     .get(userController.list_all_users)
+
+    app.route('/auth')
+    .post(userController.get_payload)
         
     app.route('/users/register')
     .post(userController.user_register)
