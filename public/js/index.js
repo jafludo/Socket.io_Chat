@@ -21,10 +21,14 @@ function callAjaxAuth(token){
 }
 
 function successAuth(data,resolve){
-    var button = $("<button></button>")
-    .addClass("btn btn-info float-right")
-    .text("Logged as : "+data.pseudo)
-    $("#UserDisplay").append(button);
+    if(!$('#btn-user-display').length)         
+    {
+        var button = $("<button></button>")
+        .addClass("btn btn-info float-right")
+        .attr( "id", "btn-user-display" )
+        .text("Logged as : "+data.pseudo)
+        $("#UserDisplay").append(button);
+    }
     resolve(data);
 }
 

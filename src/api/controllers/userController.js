@@ -94,10 +94,16 @@ exports.user_register = async function(req,res) {
 }
 exports.get_payload = (req, res) => {
     let {token} = req.body;
-    console.log("data : "+token)
-    var payload = jwt.verify(token, process.env.JWT);
-    res.status(200);
-    res.json(payload.userData); 
+    console.log("data : "+token); 
+    try{
+      var payload = jwt.verify(token, process.env.JWT);
+      res.status(200);
+      res.json(payload.userData); 
+    }
+    catch(error){
+      res.status(500);
+      res.json({message : "Error token !"}); 
+    }
 };
 
 exports.user_login = (req, res) => {
