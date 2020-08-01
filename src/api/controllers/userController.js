@@ -62,7 +62,7 @@ exports.user_register = async function(req,res) {
 
     let new_user = new User(req.body);
     let password = req.body.password;
-  
+    new_user.role = "Member";
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
