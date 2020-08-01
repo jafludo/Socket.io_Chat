@@ -25,8 +25,7 @@ function successAuth(data,resolve){
     .addClass("btn btn-info float-right")
     .text("Logged as : "+data.pseudo)
     $("#UserDisplay").append(button);
-    sessionStorage.setItem('username',data.pseudo);
-    resolve(true);
+    resolve(data);
 }
 
 socket.on('connect', async function(socketd){
@@ -35,13 +34,15 @@ socket.on('connect', async function(socketd){
         window.location.href = "login.html";
     }else if(token){
         var response = await callAjaxAuth(token);
-        console.log(response);
-        DisplayInfoAndEmitSocket();
+        if(!sessionStorage.getItem('username')){
+            DisplayInfoAndEmitSocket(response);
+        }
     }
 });
 
 //Wait Ajax request for username then emit your socket + Display
-function DisplayInfoAndEmitSocket(){
+function DisplayInfoAndEmitSocket(response){
+    sessionStorage.setItem('username',response.pseudo);
     var date = formatDate();
     var user = sessionStorage.getItem('username');
     var joinmsg = date + " " + user +" join the chat !\n";
