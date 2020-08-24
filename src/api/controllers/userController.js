@@ -92,9 +92,10 @@ exports.user_register = async function(req,res) {
   }
   
 }
+
 exports.get_payload = (req, res) => {
     let {token} = req.body;
-    console.log("data : "+token); 
+    //console.log("data : "+token); 
     try{
       var payload = jwt.verify(token, process.env.JWT);
       res.status(200);
