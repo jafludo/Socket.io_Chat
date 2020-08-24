@@ -5,7 +5,10 @@ exports.initserver = (io) =>{
     io.sockets.on('connection', function (socket) {
         console.log("client connected !")
         clientsConnected.push(socket.id);
-
+        var data = {
+            nbconnected : clientsConnected.length
+        }
+        io.sockets.emit('nb_connected',data);
         socket.on('disconnecting', (reason) => {
             var userleft = socket.id+" left the chat !\n";
             console.log("client disconnected for " + reason + " !")
@@ -13,8 +16,16 @@ exports.initserver = (io) =>{
             if(indexclientarray != -1){
                 //Client find
                 clientsConnected.splice(indexclientarray, 1);
+                var data = {
+                    nbconnected : clientsConnected.length
+                }
+                io.sockets.emit('nb_connected',data);
             }
             //socket.broadcast.emit('userdisconnected',userleft);
+        });
+
+        socket.on('nb_connected', (data) => {
+            io.socket.broadcast.emit('nb_connected',data);
         });
 
         socket.on('userdisconnected', (data) => {
@@ -31,17 +42,4 @@ exports.initserver = (io) =>{
         });
         
     });
-    nbConnectes();
-}
-
-//Function à faire pour calculer le nombre de sockets connectés sur le serveur
-function nbConnectes(){
-
-    var nbConnectes = null;
-
-    setInterval(function(){
-        console.log(clientsConnected.length);
-    },1000)
-
-    return nbConnectes;
 }

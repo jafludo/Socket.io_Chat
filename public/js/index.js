@@ -88,6 +88,10 @@ socket.on('disconnect', function(){
 
 });
 
+socket.on('nb_connected', function(data){
+    console.log(data);
+});
+
 socket.on('messagetosend', function(data){
     $('#textbox').val($('#textbox').val() + data);
 });
