@@ -2,13 +2,10 @@ var clientsConnected = new Array();
 exports.initserver = (io) =>{
 
     //io -> server qui emet // socket -> socket qui a appele le serveur
+    //Init socket client
     io.sockets.on('connection', function (socket) {
         console.log("client connected !")
         clientsConnected.push(socket.id);
-        var data = {
-            nbconnected : clientsConnected.length
-        }
-        io.sockets.emit('nb_connected',data);
         socket.on('disconnecting', (reason) => {
             var userleft = socket.id+" left the chat !\n";
             console.log("client disconnected for " + reason + " !")
@@ -16,17 +13,12 @@ exports.initserver = (io) =>{
             if(indexclientarray != -1){
                 //Client find
                 clientsConnected.splice(indexclientarray, 1);
-                var data = {
-                    nbconnected : clientsConnected.length
-                }
-                io.sockets.emit('nb_connected',data);
+            }else{
+                console.log("not find")
             }
             //socket.broadcast.emit('userdisconnected',userleft);
         });
 
-        socket.on('nb_connected', (data) => {
-            io.socket.broadcast.emit('nb_connected',data);
-        });
 
         socket.on('userdisconnected', (data) => {
             socket.broadcast.emit('userdisconnected',data);
@@ -43,3 +35,7 @@ exports.initserver = (io) =>{
         
     });
 }
+exports.get_sockets = (req,res) =>{
+    res.status(200);
+    res.json(clientsConnected.length);
+};

@@ -1,5 +1,6 @@
 var socket = io('http://localhost:8080');
-
+callAjaxNbSockets();
+setInterval(callAjaxNbSockets,1000);
 function callAjaxAuth(token){
     return new Promise(resolve =>{
         $.ajax({
@@ -88,10 +89,6 @@ socket.on('disconnect', function(){
 
 });
 
-socket.on('nb_connected', function(data){
-    console.log(data);
-});
-
 socket.on('messagetosend', function(data){
     $('#textbox').val($('#textbox').val() + data);
 });
@@ -105,6 +102,27 @@ socket.on('userdisconnected', function(data){
 socket.on('messageget', function(data){
     $('#textbox').val($('#textbox').val() + data);
 });
+
+function callAjaxNbSockets(){
+ 
+    $.ajax({
+        url : 'http://127.0.0.1:8080/sockets/?', // La ressource ciblée
+        type : 'GET', // Le type de la requête HTTP.
+
+        success: function(data, textStatus, xhr){
+            if(data < 1){
+                $("#input_userconnected").text("Il y a "+data+" utilisateurs connecté sur le chat");
+            }else{
+                $("#input_userconnected").text("Il y a "+data+" utilisateurs connectés sur le chat");
+            }
+            
+        },
+        error: function(e) {
+            console.log(e);
+        }
+    });
+    
+}
 
 function sendMessage(){
     var date = formatDate();
