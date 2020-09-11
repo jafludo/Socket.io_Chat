@@ -114,7 +114,8 @@ exports.user_login = (req, res) => {
     .then(user => {
         let hash = user.password;
         var result = bcrypt.compareSync(body.password, hash); // true
-        if(result){
+        let alreadyconnected = user.connected;
+        if(result && alreadyconnected == false){
             let userData = {
                 pseudo : user.pseudo,
                 email: user.email,
@@ -127,10 +128,15 @@ exports.user_login = (req, res) => {
                 res.json({message: "Erreur serveur."});
                 }
                 else {
+                  //Save user connected true
                   res.status(200);
                   res.json(token);
                 }
             })
+        }
+        else if(alreadyconnected == true){
+          res.status(201);
+          res.json({message: "User already connected !"})     
         }
         else{
             res.status(201);

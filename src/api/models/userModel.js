@@ -20,6 +20,11 @@ let userSchema = new Schema({
     type: String,
     required: true
   },
+  connected: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   createAt: {
     type: Date,
     //required: true
