@@ -24,7 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mongodb": "^3.5.9",
-    "mongoose": "^5.11.18",
+    "mongoose": "^5.12.14",
     "socket.io": "^2.3.0"
   }
 }
